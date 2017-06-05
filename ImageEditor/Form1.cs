@@ -234,11 +234,6 @@ namespace ImageEditor
             filter(bitmap.ToSepia());
         }
 
-        private void blackAndWhiteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            filter(bitmap.ToBlackAndWhite());
-        }
-
         private void pixallateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             filter(bitmap.ToPixalation());
@@ -278,11 +273,8 @@ namespace ImageEditor
             Rotate rotateForm = new Rotate();
             if (rotateForm.ShowDialog() == DialogResult.OK)
             {
-                UndoStackAdd(pictureBoxImage.Image);
-                System.Drawing.Bitmap image = (Bitmap)pictureBoxImage.Image;
-                pictureBoxImage.Image = image.rotate(rotateForm.Degrees);
-                adjustWindow(image.Width, image.Height);
-                RedoStack.Clear();
+                filter(bitmap.rotate(rotateForm.Degrees));
+                adjustWindow(bitmap.Width, bitmap.Height);
             }
         }
 

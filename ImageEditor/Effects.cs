@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
 using AForge;
+using AForge.Imaging.Filters;
 
 namespace ExtensionMethods
 {
@@ -36,7 +37,7 @@ namespace ExtensionMethods
 
         public static Bitmap ToBlackAndWhite(this Bitmap bitmap)
         {
-            AForge.Imaging.Filters.GrayscaleY filter = new AForge.Imaging.Filters.GrayscaleY();
+            AForge.Imaging.Filters.Grayscale filter = Grayscale.CommonAlgorithms.Y;
             return filter.Apply(AForge.Imaging.Image.Clone(bitmap, PixelFormat.Format24bppRgb));
         }
 

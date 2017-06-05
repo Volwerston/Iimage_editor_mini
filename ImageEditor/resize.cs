@@ -16,8 +16,8 @@ namespace ImageEditor
             InitializeComponent();
         }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public new int Width { get; set; }
+        public new int Height { get; set; }
 
         private void button1_Click(object sender, EventArgs e)
         {
