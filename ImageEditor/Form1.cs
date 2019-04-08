@@ -84,7 +84,7 @@ namespace ImageEditor
                 rToolStripMenuItem.Enabled = false;
                 RedoStack.Clear();
                 UndoStack.Clear();
-                pictureBoxImage.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBoxImage.SizeMode = PictureBoxSizeMode.CenterImage;
                 graphics = Graphics.FromImage(bitmap);
             }
         }
@@ -296,8 +296,15 @@ namespace ImageEditor
         {
             if (draw)
             {
+                int difH = 0;
+                int difW = 0;
+                if (bitmap != null)
+                {
+                    difH = (pictureBoxImage.Height - bitmap.Size.Height) / 2;
+                    difW = (pictureBoxImage.Width - bitmap.Size.Width) / 2;
+                }
                 graphics.InterpolationMode = InterpolationMode.Default;
-                graphics.FillEllipse(new SolidBrush(paintcolor), e.X - x + x, e.Y - y + y, brushSize, brushSize);
+                graphics.FillEllipse(new SolidBrush(paintcolor), e.X - difW, e.Y - difH, brushSize, brushSize);
                 pictureBoxImage.Image = bitmap;
             }
         }

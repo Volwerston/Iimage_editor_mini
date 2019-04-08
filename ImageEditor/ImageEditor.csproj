@@ -203,6 +203,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="AForge">
+      <Version>2.2.5</Version>
+    </PackageReference>
     <PackageReference Include="AForge.Imaging">
       <Version>2.2.5</Version>
     </PackageReference>
