@@ -139,6 +139,9 @@ namespace ImageEditor
             {
                 RedoStackAdd(pictureBoxImage.Image);
                 pictureBoxImage.Image = UndoStack.Pop();
+                bitmap = new Bitmap(pictureBoxImage.Image);
+                graphics = Graphics.FromImage(bitmap);
+
                 if (UndoStack.Count == 0)
                 {
                     undoToolStripMenuItem.Enabled = false;
@@ -162,6 +165,9 @@ namespace ImageEditor
             {
                 UndoStackAdd(pictureBoxImage.Image);
                 pictureBoxImage.Image = RedoStack.Pop();
+                bitmap = new Bitmap(pictureBoxImage.Image);
+                graphics = Graphics.FromImage(bitmap);
+
                 if (RedoStack.Count == 0)
                 {
                     rToolStripMenuItem.Enabled = false;
