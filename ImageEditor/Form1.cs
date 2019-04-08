@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace ImageEditor
@@ -314,6 +315,9 @@ namespace ImageEditor
             draw = true;
             x = e.X;
             y = e.Y;
+
+            var clone = AForge.Imaging.Image.Clone(bitmap, PixelFormat.Format24bppRgb);
+            UndoStackAdd(clone);
         }
 
         private void pictureBoxImage_MouseUp(object sender, MouseEventArgs e)
