@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
-using AForge;
 using AForge.Imaging.Filters;
 
-namespace ExtensionMethods
+namespace ImageEditor
 {
     public static class Effects
     {
         public static Bitmap ToSepia(this Bitmap bitmap)
         {       
-            AForge.Imaging.Filters.Sepia filter = new AForge.Imaging.Filters.Sepia();
-            return filter.Apply(AForge.Imaging.Image.Clone(bitmap, PixelFormat.Format24bppRgb));
+            var sepiaFilter = new Sepia();
+            return sepiaFilter.Apply(AForge.Imaging.Image.Clone(bitmap, PixelFormat.Format24bppRgb));
         }
 
         public static Bitmap ToPixalation(this Bitmap bitmap)
         {
-            AForge.Imaging.Filters.Pixellate filter = new AForge.Imaging.Filters.Pixellate();
-            return filter.Apply(AForge.Imaging.Image.Clone(bitmap,PixelFormat.Format24bppRgb));
+            var pixellateFilter = new Pixellate();
+            return pixellateFilter.Apply(AForge.Imaging.Image.Clone(bitmap,PixelFormat.Format24bppRgb));
         }
 
         public static Bitmap resize(this Bitmap bitmap, int width, int height)
