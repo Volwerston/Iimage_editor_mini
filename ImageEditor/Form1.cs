@@ -85,7 +85,7 @@ namespace ImageEditor
                 rToolStripMenuItem.Enabled = false;
                 RedoStack.Clear();
                 UndoStack.Clear();
-                pictureBoxImage.SizeMode = PictureBoxSizeMode.CenterImage;
+                pictureBoxImage.SizeMode = PictureBoxSizeMode.Zoom;
                 graphics = Graphics.FromImage(bitmap);
             }
         }
@@ -266,6 +266,11 @@ namespace ImageEditor
             {
                 adjustWindow(resizeForm.Width, resizeForm.Height);
                 filter(bitmap.resize(resizeForm.Width,resizeForm.Height));
+
+                var img = (Bitmap) bitmap.Clone();
+                adjustWindow(img.Width, img.Height);
+                pictureBoxImage.Image = img;
+                pictureBoxImage.SizeMode = PictureBoxSizeMode.CenterImage;
             }
         }
 
@@ -293,6 +298,25 @@ namespace ImageEditor
             brushSize = (int)numericUpDown1.Value;
         }
 
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (button1.Text == "Zoom")
+            {
+                pictureBoxImage.SizeMode = PictureBoxSizeMode.Zoom;
+                button1.Text = "Center";
+            }
+            else
+            {
+                pictureBoxImage.SizeMode = PictureBoxSizeMode.CenterImage;
+                button1.Text = "Zoom";
+            }
+        }
+
         private void pictureBoxImage_MouseMove(object sender, MouseEventArgs e)
         {
             if (draw)
@@ -301,12 +325,31 @@ namespace ImageEditor
                 int difW = 0;
                 if (bitmap != null)
                 {
-                    difH = (pictureBoxImage.Height - bitmap.Size.Height) / 2;
-                    difW = (pictureBoxImage.Width - bitmap.Size.Width) / 2;
+                    if (pictureBoxImage.SizeMode == PictureBoxSizeMode.CenterImage)
+                    {
+                        difH = (pictureBoxImage.Height - bitmap.Height) / 2;
+                        difW = (pictureBoxImage.Width - bitmap.Width) / 2;
+
+                        graphics.InterpolationMode = InterpolationMode.Default;
+                        graphics.FillEllipse(new SolidBrush(paintcolor), (int)((e.X - difW)), (int)((e.Y - difH)), brushSize, brushSize);
+                        pictureBoxImage.Image = bitmap;
+                    }
+                    else
+                    {
+                        var wfactor = (double)bitmap.Width / pictureBoxImage.ClientSize.Width;
+                        var hfactor = (double)bitmap.Height / pictureBoxImage.ClientSize.Height;
+
+                        var resizeFactor = Math.Max(wfactor, hfactor);
+                        var imageSize = new Size((int)(bitmap.Width / resizeFactor), (int)(bitmap.Height / resizeFactor));
+
+                        difH = (pictureBoxImage.Height - imageSize.Height) / 2;
+                        difW = (pictureBoxImage.Width - imageSize.Width) / 2;
+
+                        graphics.InterpolationMode = InterpolationMode.Default;
+                        graphics.FillEllipse(new SolidBrush(paintcolor), (int)((e.X - difW) * resizeFactor), (int)((e.Y - difH) * resizeFactor), brushSize, brushSize);
+                        pictureBoxImage.Image = bitmap;
+                    }
                 }
-                graphics.InterpolationMode = InterpolationMode.Default;
-                graphics.FillEllipse(new SolidBrush(paintcolor), e.X - difW, e.Y - difH, brushSize, brushSize);
-                pictureBoxImage.Image = bitmap;
             }
         }
 
