@@ -316,8 +316,11 @@ namespace ImageEditor
             x = e.X;
             y = e.Y;
 
-            var clone = AForge.Imaging.Image.Clone(bitmap, PixelFormat.Format24bppRgb);
-            UndoStackAdd(clone);
+            if (bitmap != null)
+            {
+                var clone = AForge.Imaging.Image.Clone(bitmap, PixelFormat.Format24bppRgb);
+                UndoStackAdd(clone);
+            }
         }
 
         private void pictureBoxImage_MouseUp(object sender, MouseEventArgs e)
