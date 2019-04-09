@@ -317,6 +317,12 @@ namespace ImageEditor
             }
         }
 
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm about = new AboutForm();
+            about.ShowDialog();
+        }
+
         private void pictureBoxImage_MouseMove(object sender, MouseEventArgs e)
         {
             if (draw)
